@@ -1,4 +1,6 @@
 <?php
+ // print_r($song_results);
+
 								//Let's make the table for the song list
 								echo "\r\n" . '<table class="ui selectable inverted black table">' . "\r\n";
 								echo '<thead><tr>';
@@ -9,12 +11,12 @@
 								} else {
 									echo '<th>Artist</th>';
 								}
-								echo '<th></th><th>Time</th><th>DL</th></tr></thead>' . "\r\n";
+								echo '<th></th><th>Genre</th><th>Time</th><th>DL</th></tr></thead>' . "\r\n";
 								echo '<tbody>' . "\r\n";
 								$cnt = $main_results['album'][0]['songcount']; //Set counter to total number of songs on album
 
 								//Loop through the songs to display each on a table row
-								for ($i = 0; $i < $cnt; $i++){
+								for ($i = 0; $i < $cnt; $i++) {
 									echo "\r\n" . '<tr class="albm-row" id="row' . $i . '">' . "\r\n"; // Start of the track listing row
 										if ($trknum == true) echo '<td id="tno' . ($i + 1) . '">' . $song_results['song'][$i]['track'] . '</td>' . "\r\n";
 										echo '<td id="trk' . ($i + 1) . '"><strong>' . $song_results['song'][$i]['title'] . '</strong></td>' . "\r\n";
@@ -59,11 +61,16 @@
 										echo '	</div>' . "\r\n";
 										echo '</div></td>' . "\r\n";
 
+										echo '<td>' . $song_results['song'][$i]['genre'][0]['name'] . '</td>' . "\r\n";
+
 										// Calculate song length from seconds
 										$result = sec2mins($song_results['song'][$i]['time']);
-										echo '<td>' . $result['minutes'] . ':' . sprintf("%02d", $result['seconds']) . '</td>' . "\r\n";
 
-										echo '<td><a href="' . $song_results['song'][$i]['url'] . '"><i class="download icon"></i></a></td>' . "\r\n";
+										echo '<td>' . (($result['hours'] > 0) ? $result['hours'].':' : '') .  $result['minutes'] . ':' . sprintf("%02d", $result['seconds']) . '</td>' . "\r\n";
+
+										// echo '<td><a href="' . $song_results['song'][$i]['url'] . '"><i class="download icon"></i></a></td>' . "\r\n";
+										echo '<td><a href="download.php?uid=' . $song_results['song'][$i]['id'] . '&type=song&filename=' . $song_results['song'][$i]['filename']  . '"><i class="download icon"></i></a></td>' . "\r\n";
+
 									echo '</tr>' . "\r\n"; // End of the row but theres some other stuff still to do in this loop
 
 									// Let's add this entry to our js 'list' array in case it becomes a new playlist or queue

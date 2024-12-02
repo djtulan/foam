@@ -173,6 +173,20 @@ function smartAPI($auth, $search, $type){
 }
 
 //
+// Download a file
+//
+function downloadSongAPI($auth, $uid, $type) {
+
+  $search = urlencode($search);
+  $call = '?action=download&type=' . $type . '&id=' . $uid . '&format=raw';
+
+  $result = c_init($auth, $call);
+
+  return $result;
+}
+
+
+//
 // Generic CURL stuff used by the various calls to call the Ampache API.
 //
 function c_init($auth, $call){
