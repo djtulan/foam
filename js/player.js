@@ -165,7 +165,7 @@ function progress() {
     $('.ui.track.slider').slider('set value', ((seek / trk01.duration()) * 100) || 0); // Update ui slider postion
   }
   // If the track is still playing, continue updating anim by calling function again.
-  if (trk01.playing()) {
+  if (trk01.playing() || seeking === true) {
     requestAnimationFrame(progress);
   }
 }
@@ -408,6 +408,7 @@ function clearQueue() {
   items = '<div class="active item">No Music Here!</div>';
   document.getElementById("queueMenu").innerHTML = items;
 }
+
 // End of functions - mainline below
 
 // We need to set some listener events for our player control buttons.
@@ -441,12 +442,7 @@ track1.addEventListener('mouseout', function() {
 
 // Some jquery to set up sliders with callbacks
 $('.ui.vol.slider')
-  .slider({
-    min: 0,
-    max: 1,
-    start: 0.5,
-    step: 0.1,
-    smooth: true,
+  .slider({ min: 0, max: 1, start: 0.5, step: 0.1, smooth: true,
     onMove: function(value) {
       changeVol(value);
     }
@@ -454,11 +450,7 @@ $('.ui.vol.slider')
 ;
 
 $('.ui.track.slider')
-  .slider({
-    min: 0,
-    max: 100,
-    start: 0,
-    step: 1,
+  .slider({ min: 0, max: 100, start: 0, step: 1,
     onChange: function(value) {
       if (seeking === true) {
         var pos = (value / 100) * trk01.duration();
