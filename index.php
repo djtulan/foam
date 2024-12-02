@@ -14,7 +14,7 @@
 <script>
   function resizeIframe(obj) {
 		obj.style.height = 0;
-		var newHeight = obj.contentWindow.document.documentElement.scrollHeight + 500;
+		var newHeight = obj.contentWindow.document.documentElement.scrollHeight + 100;
     obj.style.height = newHeight + 'px';
   }
 </script>
